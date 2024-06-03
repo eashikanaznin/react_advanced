@@ -1,8 +1,6 @@
-# React + Vite
+# uselayouteffect
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+It allows synchronizing with the browser layout before paint. This is useful for measuring DOM nodes/sizes or integrating with non-React DOM libraries.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Disadvantages
+useLayoutEffect is synchronous, meaning that it blocks the browser from painting the DOM until it has finished executing. This can lead to performance problems if you use it too often or for expensive operations
