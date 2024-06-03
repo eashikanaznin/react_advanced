@@ -1,10 +1,11 @@
 
 import './App.css'
 import { Calender } from './Calender'
+import { useState } from 'react'
 
 function App() {
-
-return <Calender currentDate = {new Date()} />
+const[currentDate, setCurrentDate] = useState(new Date())
+return <Calender currentDate = { currentDate } onChange = { setCurrentDate } />
 }
 
 export default App
