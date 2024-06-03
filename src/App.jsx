@@ -1,8 +1,10 @@
 
+import './App.css'
+import { Calender } from './Calender'
 
 function App() {
 
-return "Hi"
+return <Calender currentDate = {new Date()} />
 }
 
 export default App
