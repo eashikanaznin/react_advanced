@@ -1,8 +1,19 @@
-# React + Vite
+# useLayoutEffect
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Suitable for side effects that need to run before the browser repaints, such as measuring the layout, making changes that should be applied before the user sees them.
 
-Currently, two official plugins are available:
+# useEffect
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Suitable for side effects that do not affect the initial render, such as fetching data, setting up subscriptions, etc
+
+# useDebugValue
+
+Inside your custom hook function, call useDebugValue and pass the value you want to display in the DevTools along with an optional formatting function
+
+# useID
+
+Suitable for side effects that do not affect the initial render, such as fetching data, setting up subscriptions, etc
+
+# useImperativeHandle
+It acts as a bridge between a child component and its parent component.
+ It allows the child component to expose specific functionalities (like the "clear" button function) to the parent component.
