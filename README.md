@@ -17,3 +17,9 @@ Suitable for side effects that do not affect the initial render, such as fetchin
 # useImperativeHandle
 It acts as a bridge between a child component and its parent component.
  It allows the child component to expose specific functionalities (like the "clear" button function) to the parent component.
+
+# useCallbacks
+useCallback is a React Hook that lets you cache a function definition between re-renders.
+
+# useCallback As Ref
+can be used to target fieldes that is not visible
