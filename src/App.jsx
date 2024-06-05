@@ -1,7 +1,15 @@
+
+
+import { Child } from "./Child"
+import styles from "./App.module.css"
+
+
 function App() {
+  console.log(styles);
   return (
     <>
-     Hi
+     <h1 className={styles.header}>Hi</h1>
+     <Child />
     </>
   )
 }
