@@ -1,17 +1,26 @@
+import { Child } from "./Child";
+import styles from "./App.module.css";
+import styled from "styled-components";
+import Button from "react-bootstrap/Button";
 
-
-import { Child } from "./Child"
-import styles from "./App.module.css"
-
-
-function App() {
-  console.log(styles);
+export default function App() {
+  // const ReadHead = styled.h1`
+  // color: green
+  // `
+  const ReadHead = styled.h1`
+    color: green;
+  `;
   return (
     <>
-     <h1 className={styles.header}>Hi</h1>
-     <Child />
-    </>
-  )
-}
+      <b className="text-yellow-500">Asman</b>
+      <ReadHead>HERE I AM</ReadHead>
+      <h1 className={styles.header}>Hi</h1>
 
-export default App
+      <Button as="a" variant="success">
+        Bootstrap Button as link
+      </Button>
+
+      <Child />
+    </>
+  );
+}
