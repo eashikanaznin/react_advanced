@@ -1,8 +1,12 @@
+
+import './App.css'
+import { Calender } from './component/Calender'
 function App() {
+  
 
   return (
     <>
-      hi
+     <Calender />
     </>
   )
 }
