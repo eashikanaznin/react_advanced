@@ -1,8 +1,10 @@
+import { Button } from "./Button"
 function App() {
 
   return (
     <>
-      hi
+      <Button name ="Button 1" class=" sm-btn clss2" />
+      <Button As ="a" name ="Link" class=" sm-btn clss2" />
     </>
   )
 }
