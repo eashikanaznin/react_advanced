@@ -1,4 +1,7 @@
 import { useState, useId } from "react";
+import { v4 as uuidv4 } from 'uuid';
+
+import { AddEventModal } from "./AddEventModal.jsx";
 import {
   format,
   startOfMonth,
@@ -13,11 +16,14 @@ export function Calender() {
   const defaultMonth = new Date();
   const [selectedMonth, setSelectedMonth] = useState(defaultMonth);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [todayId, setTodayId] = useState('');
+
   const kid = useId();
 
   // modal controll
-  const openModal = () => {
+  const openModal = (key) => {
     setIsModalOpen(true);
+    setTodayId(key)
   };
 
   const closeModal = () => {
@@ -58,6 +64,7 @@ export function Calender() {
     setSelectedMonth((nowDate) => defaultMonth);
   };
 
+
   return (
     <div>
       <div className="calendar">
@@ -80,11 +87,11 @@ export function Calender() {
         <div className="days">
           {calenderDays.map((day) => (
             // console.log(day.day)
-            <div className="day">
+            <div  key={`${kid}-${day.date}-calday`} className="day">
               <div className="day-header">
                 <div className="week-name">{day.day}</div>
                 <div className={`day-number ${day.isToday}`}>{day.date}</div>
-                <button key={kid} onClick={openModal} className="add-event-btn">
+                <button key={uuidv4()} onClick={(e) => openModal(uuidv4())} className="add-event-btn">
                   +
                 </button>
               </div>
@@ -421,87 +428,7 @@ export function Calender() {
     </div>
   </div> */}
 
-      {isModalOpen && (
-        <div className="modal">
-          <div className="overlay"></div>
-          <div className="modal-body">
-            <div className="modal-title">
-              <div>Add Event</div>
-              <small>{format(selectedMonth, "M/d/yyyy")}</small>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="close-btn"
-              >
-                &times;
-              </button>
-            </div>
-            <form>
-              <div className="form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" />
-              </div>
-              <div className="form-group checkbox">
-                <input type="checkbox" name="all-day" id="all-day" />
-                <label for="all-day">All Day?</label>
-              </div>
-              <div className="row">
-                <div className="form-group">
-                  <label for="start-time">Start Time</label>
-                  <input type="time" name="start-time" id="start-time" />
-                </div>
-                <div className="form-group">
-                  <label for="end-time">End Time</label>
-                  <input type="time" name="end-time" id="end-time" />
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Color</label>
-                <div className="row left">
-                  <input
-                    type="radio"
-                    name="color"
-                    value="blue"
-                    id="blue"
-                    checked
-                    className="color-radio"
-                  />
-                  <label for="blue">
-                    <span className="sr-only">Blue</span>
-                  </label>
-                  <input
-                    type="radio"
-                    name="color"
-                    value="red"
-                    id="red"
-                    className="color-radio"
-                  />
-                  <label for="red">
-                    <span className="sr-only">Red</span>
-                  </label>
-                  <input
-                    type="radio"
-                    name="color"
-                    value="green"
-                    id="green"
-                    className="color-radio"
-                  />
-                  <label for="green">
-                    <span className="sr-only">Green</span>
-                  </label>
-                </div>
-              </div>
-              <div className="row">
-                <button className="btn btn-success" type="submit">
-                  Add
-                </button>
-                <button className="btn btn-delete" type="button">
-                  Delete
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {isModalOpen && <AddEventModal selectedMonth = {selectedMonth} setIsModalOpen = {setIsModalOpen} todayId = {todayId} />}
     </div>
   );
 }
