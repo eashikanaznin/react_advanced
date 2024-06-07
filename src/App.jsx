@@ -1,8 +1,10 @@
+import { ToastFrom } from "./ToastForm"
+
 function App() {
 
   return (
     <>
-      hi
+     <ToastFrom />
     </>
   )
 }
