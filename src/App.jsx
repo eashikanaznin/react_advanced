@@ -1,4 +1,5 @@
 import { ToastFrom } from "./ToastForm"
+import './style.css'
 
 function App() {
 
