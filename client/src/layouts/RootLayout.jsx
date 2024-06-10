@@ -27,9 +27,9 @@ export function RootLayout() {
       </nav>
       <ScrollRestoration />
       {isLoading && <div className="" />}
-      {/* <div className={`container ${isLoading ? "loading" : ""}`}> */}
+      <div className={`container}`}>
         <Outlet />
-      {/* </div> */}
+      </div>
     </>
   )
 }
