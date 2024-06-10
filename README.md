@@ -1,8 +1,3 @@
-# React + Vite
+# useTransition
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The useTransition hook in React allows you to mark state updates as non-urgent and lets React handle them with lower priority. This can be particularly useful for improving the user experience in cases where you want to keep the UI responsive while performing less critical updates.
