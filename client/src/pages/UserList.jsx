@@ -10,27 +10,45 @@ function UserList() {
     <>
       <h1 className="page-title">Users</h1>
       <div className="card-grid">
-        <Suspense fallback={
-          <SkeletonItems number = { 5 }>
-            <Skeleton />
-          </SkeletonItems>
-        }>
-          <Await resolve={ UsersPromise }>
-            { (users) => users.map((user) => (
-              <div key={user.id} className="card">
-                <div className="card-header">{user.name}</div>
+        <Suspense
+          fallback={
+            <SkeletonItems number={5}>
+              <div className="card">
+                <div className="card-header">
+                  <Skeleton />
+                </div>
                 <div className="card-body">
-                  <div>{user.company.name}</div>
-                  <div>{user.website}</div>
-                  <div>{user.email}</div>
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
                 </div>
                 <div className="card-footer">
-                  <Link className="btn" to={user.id.toString()}>
+                  {/* <Link className="btn" to={user.id.toString()}>
                     View
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
-            ))}
+            </SkeletonItems>
+          }
+        >
+          <Await resolve={UsersPromise}>
+            {(users) =>
+              users.map((user) => (
+                <div key={user.id} className="card">
+                  <div className="card-header">{user.name}</div>
+                  <div className="card-body">
+                    <div>{user.company.name}</div>
+                    <div>{user.website}</div>
+                    <div>{user.email}</div>
+                  </div>
+                  <div className="card-footer">
+                    <Link className="btn" to={user.id.toString()}>
+                      View
+                    </Link>
+                  </div>
+                </div>
+              ))
+            }
           </Await>
         </Suspense>
       </div>
