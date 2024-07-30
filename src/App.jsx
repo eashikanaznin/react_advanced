@@ -1,6 +1,11 @@
 function App() {
   return (
-   <h1>Hi</h1> 
+    <>
+    <h1>Check error</h1> 
+    {testVar}
+    </>
+   
+   
   )
 }
 
