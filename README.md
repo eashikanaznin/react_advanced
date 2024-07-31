@@ -1,5 +1,4 @@
-# Error Boundaries
+# Capture event
 
-> It must be a class component
-> We can decide what to show incase of error instead of breaking down the entire app
-> Can'nt be used with async functions like fetch and set timeout
+> Bubble phase: bottom to top , this is the default way, child events gets executed first
+> To reverse, use onClickCaptured
