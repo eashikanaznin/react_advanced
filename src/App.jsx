@@ -1,7 +1,12 @@
+import CustomInput from "./CustomInput";
 function App() {
   return (
-   <h1>Hi</h1> 
-  )
+    <>
+      <CustomInput />
+      <span>Lorem ipsum</span>
+      <CustomInput />
+    </>
+  );
 }
 
 export default App;
