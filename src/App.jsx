@@ -1,73 +1,74 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import "./InterSection.js";
+import { useCallback, useEffect, useRef, useState } from "react"
+import "./App.css"
 import { parseLinkHeader } from "./parseLinkHeader"
-const ITEMS = 20;
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const nextPhotoUrlRef = useRef();
+const LIMIT = 50
 
-  // Function to fetch data
-  function fetchData(url) {
-    fetch(url)
-      .then((response) => {
-        // update nextPhotoUrlRef based on the response headers
-        const linkHeader = response.headers.get("Link");
-        const parsedLinks = parseLinkHeader(linkHeader);
-        nextPhotoUrlRef.current = parsedLinks.next?.url;
-        return response.json();
-      })
-      .then((data) => {
-        setImages((prevImages) => [...prevImages, ...data]);
-      })
-      .catch((e) => setError(e))
-      .finally(() => {
-        setLoading(false);
-      });
+export default function App() {
+  const [photos, setPhotos] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const nextPhotoUrlRef = useRef()
+
+  async function fetchPhotos(url, { overwrite = false } = {}) {
+    setIsLoading(true)
+    try {
+      await new Promise(res => setTimeout(res, 2000))
+      const res = await fetch(url)
+      nextPhotoUrlRef.current = parseLinkHeader(res.headers.get("Link")).next
+      const photos = await res.json()
+      if (overwrite) {
+        setPhotos(photos)
+      } else {
+        setPhotos(prevPhotos => {
+          return [...prevPhotos, ...photos]
+        })
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  // useCallback to handle the last image intersection
-  const imageRef = useCallback((image) => {
-    if (image == null || nextPhotoUrlRef.current == null) return;
+  const imageRef = useCallback(image => {
+    if (image == null || nextPhotoUrlRef.current == null) return
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
-        fetchData(nextPhotoUrlRef.current);
-        observer.unobserve(image); // Unobserve the last image
+        fetchPhotos(nextPhotoUrlRef.current)
+        observer.unobserve(image)
       }
-    });
+    })
 
-    observer.observe(image);
-  }, []);
+    observer.observe(image)
+  }, [])
 
   useEffect(() => {
-    // Initial data fetch
-    fetchData(
-      `http://localhost:3000/photos-short-list?_page=1&_limit=${ITEMS}`
-    );
-  }, []);
+    fetchPhotos(
+      `http://localhost:3000/photos-short-list?_page=1&_limit=${LIMIT}`,
+      {
+        overwrite: true,
+      }
+    )
+  }, [])
 
-  if (loading) {
-    return "Loading";
-  } else if (error != null) {
-    return "Error";
-  } else {
-    return (
-      <div className="grid">
-        {images.map((image, index) => (
-          <img
-            className="card"
-            key={image.id}
-            style={{ width: "100px" }}
-            src={image.url}
-            ref={index === images.length - 1 ? imageRef : undefined}
-          />
-        ))}
-      </div>
-    );
-  }
+  return (
+    <div className="grid">
+      {photos.map((photo, index) => (
+        <img
+          src={photo.url}
+          key={photo.id}
+          ref={index === photos.length - 1 ? imageRef : undefined}
+        />
+      ))}
+      {isLoading &&
+        Array.from({ length: LIMIT }, (_, index) => index).map(n => {
+          return (
+            <div key={n} className="skeleton">
+              Loading...
+            </div>
+          )
+        })}
+    </div>
+  )
 }
-
-export default App;
