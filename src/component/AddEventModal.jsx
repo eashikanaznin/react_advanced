@@ -2,12 +2,12 @@ import { addEvent } from "../utility/addEvent.js";
 import { format } from "date-fns";
 import { useState } from "react";
 import { useEffect } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-export function AddEventModal({ selectedMonth, setIsModalOpen, toDayId }) {
+export function AddEventModal({ selectedMonth, setIsModalOpen, todayId }) {
   const [eventFormValues, setEventFormValues] = useState({
-    toDayId: toDayId,
-    id:`event-${uuidv4()}`,
+    todayId: todayId,
+    id: `event-${uuidv4()}`,
     name: "",
     allDay: "",
     color: "",
@@ -16,12 +16,12 @@ export function AddEventModal({ selectedMonth, setIsModalOpen, toDayId }) {
   });
 
   useEffect(() => {
-    const storedFormValues = localStorage.getItem('eventFormValues');
+    const storedFormValues = localStorage.getItem("eventFormValues");
     if (storedFormValues) {
       setEventFormValues(JSON.parse(storedFormValues));
     }
   }, []);
-  
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setEventFormValues((prevValues) => ({
@@ -32,7 +32,9 @@ export function AddEventModal({ selectedMonth, setIsModalOpen, toDayId }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(eventFormValues));
+    console.log("PINK", JSON.stringify(eventFormValues));
+    addEvent(eventFormValues);
+    setIsModalOpen(false);
     // localStorage.setItem('eventFormValues', JSON.stringify(eventFormValues));
     // console.log('Event added', eventFormValues);
   };
@@ -50,11 +52,26 @@ export function AddEventModal({ selectedMonth, setIsModalOpen, toDayId }) {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-          <input id="id" type="hidden" value = {eventFormValues.id} onChange={handleChange} />
-          <input id="toDayId" type="hidden" value={eventFormValues.toDayId} onChange={handleChange} />
+            <input
+              id="id"
+              type="hidden"
+              value={eventFormValues.id}
+              onChange={handleChange}
+            />
+            <input
+              id="toDayId"
+              type="hidden"
+              value={todayId}
+              onChange={handleChange}
+            />
             <label htmlFor="name">Name</label>
-            <input type="text" name="name" id="name" value={eventFormValues.name}
-            onChange={handleChange} />
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value={eventFormValues.name}
+              onChange={handleChange}
+            />
           </div>
           <div className="form-group checkbox">
             <input type="checkbox" name="all-day" id="all-day" />
@@ -78,7 +95,6 @@ export function AddEventModal({ selectedMonth, setIsModalOpen, toDayId }) {
                 name="color"
                 value="blue"
                 id="blue"
-                checked
                 className="color-radio"
               />
               <label htmlFor="blue">
