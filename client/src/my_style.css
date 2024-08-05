@@ -1,0 +1,43 @@
+nav {
+  padding: 15px;
+  border-bottom: 1px solid grey;
+}
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+nav ul.level-1 {
+  display: inline-flex;
+}
+nav ul.level-1 li {
+  display: block;
+  padding: 15px;
+}
+
+ul.dropdown-content li {
+  display: block;
+  padding: 15px;
+}
+
+/* .icon-button{
+  width: 83px;
+} */
+.sticky-nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  margin-bottom: 50px;
+  z-index: 9999999;
+}
+.dropdown-content {
+  position: absolute;
+  background-color: grey;
+  z-index: 1111;
+  opacity: 1;
+}
+.container {
+  margin-top: 120px;
+}
